@@ -58,6 +58,59 @@ public:
         }
     }
 
+    // метод сортировки пузырьком 
+
+    void bubble_sort(int* arr, int n) {
+
+        N = n;
+
+        for (int i = 1; i < N; ++i) {
+            for (int j = 0; j < N - i; j++) {
+                if (arr[j] < arr[j + 1]) {
+
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+
+                }
+            }
+        }
+    }
+
+    void cocktail_sort(int* arr, int n) {
+
+        int count;
+        int left = 0, right = count - 1;
+        int flag = 1;
+
+        while ( (left < right) && flag > 0 ){
+
+            flag = 0;
+            for (int i = left; i < right; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    double t = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = t;
+                    flag = 1;
+                }
+            }
+
+            right--;
+
+            for (int i = right; i > left; i--){
+
+                if (arr[i - 1] > arr[i]){
+
+                    double t = arr[i];
+                    arr[i] = arr[i - 1];
+                    arr[i - 1] = t;
+                    flag = 1;
+                }
+            }
+            left++;
+        }
+    }
+
 };
 
 void getCorrectInput(int& value) {
@@ -88,15 +141,15 @@ int main()
     switch (variant)
     {
         case 1: {
-            Array array(n);
+            Array arr(n);
             cout << "Массив: " << endl;
-            array.printArray();
+            arr.printArray();
             break;
         }
         case 2: {
-            Array array(n, true);
+            Array arr(n, true);
             cout << "Массив: " << endl;
-            array.printArray();
+            arr.printArray();
             break;
         }
         default:

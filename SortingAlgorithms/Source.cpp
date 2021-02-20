@@ -12,6 +12,31 @@ private:
     int* arr;
     int N;
 public:
+
+    /*struct Iterator
+    {
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = int;
+        using pointer = int*;
+        using reference = int&;
+
+        Iterator(pointer ptr) : m_ptr(ptr) {}
+
+        reference operator*() const { return *m_ptr; }
+        pointer operator->() { return m_ptr; }
+        Iterator& operator++() { m_ptr++; return *this; }
+        Iterator operator++(int) { Iterator tmp = *this; ++(*this); return tmp; }
+        friend bool operator== (const Iterator& a, const Iterator& b) { return a.m_ptr == b.m_ptr; };
+        friend bool operator!= (const Iterator& a, const Iterator& b) { return a.m_ptr != b.m_ptr; };
+
+    private:
+        pointer m_ptr;
+    };
+
+    Iterator begin() { return Iterator(&arr[0]); }
+    Iterator end() { return Iterator(&arr[N]); }
+    */
     Array() //конструктор без параметров
     {
         N = 100000;
@@ -30,7 +55,7 @@ public:
     {
         N = n;
         arr = new int[N];
-        setRand();
+        set_rand();
     }
 
     ~Array() //деструктор
@@ -38,14 +63,17 @@ public:
         delete[] arr; //освобождение памяти
     }
 
-    void printArray() //показать массив
+    void print_array() //показать массив
     {
-        for (int i = 0; i < N; i++)
+        //for (auto it = begin(), ed = end(); it != ed; it++)
+        for (int i = 0; i < N; i++) 
+        {
+         // const auto i = *it - 1;
             cout << arr[i] << "  ";
-        cout << endl;
+        }
     }
 
-    void setRand() //ввод случайных элементов массива
+    void set_rand() //ввод случайных элементов массива
     {
         srand(time(NULL));
         for (int i = 0; i < N; i++)
@@ -56,21 +84,23 @@ public:
     {
         for (int i = 0; i < N; i++)
         {
-            cout << "Введите " << i << " элемент массива: ";
+            cout << "Enter " << i << " element of array: ";
             cin >> arr[i];
         }
     }
+
     // метод сортировки пузырьком 
-
-    void bubble_sort(long long int& iterations, long long int& comparisons) {
-
-        for (int i = 0; i < N; ++i) {
+    void bubble_sort(long long int& iterations, long long int& comparisons) 
+    {
+        for (int i = 0; i < N; ++i) 
+        {
             iterations++;
-            for (int j = 0; j < N - i; j++) {
+            for (int j = 0; j < N - i; j++) 
+            {
                 iterations++;
                 comparisons++;
-                if (arr[j] < arr[j + 1]) {
-
+                if (arr[j] < arr[j + 1]) 
+                {
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -80,34 +110,36 @@ public:
         }
     }
 
-    void cocktail_sort(long long int& iterations, long long int& comparisons) {
-
+    void cocktail_sort(long long int& iterations, long long int& comparisons) 
+    {
         int count = N;
         int left = 0, right = count - 1;
         int flag = 1;
 
-        while ((left < right) && flag > 0) {
+        while ((left < right) && flag > 0) 
+        {
             iterations++;
 
             flag = 0;
-            for (int i = left; i < right; i++) {
+            for (int i = left; i < right; i++) 
+            {
                 iterations++;
                 comparisons++;
-                if (arr[i] > arr[i + 1]) {
+                if (arr[i] > arr[i + 1]) 
+                {
                     double t = arr[i];
                     arr[i] = arr[i + 1];
                     arr[i + 1] = t;
                     flag = 1;
                 }
             }
-
             right--;
-
-            for (int i = right; i > left; i--) {
+            for (int i = right; i > left; i--) 
+            {
                 iterations++;
                 comparisons++;
-                if (arr[i - 1] > arr[i]) {
-
+                if (arr[i - 1] > arr[i]) 
+                {
                     double t = arr[i];
                     arr[i] = arr[i - 1];
                     arr[i - 1] = t;
@@ -118,14 +150,24 @@ public:
         }
     }
 
+    //метод сортировки вставками
+
+    //метод сортировки вибором
+
+    //метод сортировки слиянием 
+
+    //метод быстрой сортировки
+
 };
 
-void getCorrectInput(int& value) {
+void get_correct_input(int& value) 
+{
     cin >> value;
-    while (cin.fail()) {
+    while (cin.fail()) 
+    {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Неправильный ввод. Пожалуйста, попробуйте еще раз: ";
+        cout << "Invalid input. Please try again: ";
         cin >> value;
     }
 }
@@ -141,40 +183,46 @@ public:
     Statistic(int n) {
         N = n;
         array = new double* [N];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++) 
+        {
             array[i] = new double[4];
         }
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < N; i++) 
+        {
+            for (int j = 0; j < 3; j++) 
+            {
                 array[i][j] = 0;
             }
         }
     }
-    void zero_array() {
-        for (int i = 0; i < 6; i++) {
+    void zero_array() 
+    {
+        for (int i = 0; i < 6; i++) 
+        {
             long long int iterations = 0, comparisons = 0;;
             clock_t time1 = clock();
-            switch (i) {
-            case 0:
-                cout << "\nАнализ bubble_sort\n";
-                zero.bubble_sort(iterations, comparisons);
-                cout << "Анализ bubble_sort завершён\n";
-                break;
-            case 1:
-                cout << "\nАнализ cocktail_sort\n";
-                zero.cocktail_sort(iterations, comparisons);
-                cout << "Анализ cocktail_sort завершён\n";
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
+            switch (i) 
+            {
+                case 0:
+                    cout << "\nc\n";
+                    zero.bubble_sort(iterations, comparisons);
+                    cout << "Bubble sort analysis done\n";
+                    break;
+                case 1:
+                    cout << "\nCocktail sort analysis\n";
+                    zero.cocktail_sort(iterations, comparisons);
+                    cout << "Cocktail sort analysis done\n";
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
             }
             clock_t time2 = clock();
             array[i][0] = (double)(time2 - time1) / CLOCKS_PER_SEC;
@@ -182,31 +230,34 @@ public:
             array[i][2] = comparisons;
         }
     }
-    void full_array() {
-        for (int i = 0; i < 6; i++) {
+    void full_array() 
+    {
+        for (int i = 0; i < 6; i++) 
+        {
             long long int iterations = 0, comparisons = 0;
             clock_t time1 = clock();
-            switch (i) {
-            case 0:
-                cout << "\nАнализ bubble_sort\n";
-                full.bubble_sort(iterations, comparisons);
-                cout << "Анализ bubble_sort завершён\n";
-                break;
-            case 1:
-                cout << "\nАнализ cocktail_sort\n";
-                full.cocktail_sort(iterations, comparisons);
-                cout << "Анализ cocktail_sort завершён\n";
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
+            switch (i) 
+            {
+                case 0:
+                    cout << "\nBubble sort analysis\n";
+                    full.bubble_sort(iterations, comparisons);
+                    cout << "Bubble sort analysis done\n";
+                    break;
+                case 1:
+                    cout << "\nCocktail sort analysis\n";
+                    full.cocktail_sort(iterations, comparisons);
+                    cout << "Cocktail sort analysis done\n";
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
             }
             clock_t time2 = clock();
             array[i][0] = (double)(time2 - time1) / CLOCKS_PER_SEC;
@@ -214,10 +265,13 @@ public:
             array[i][2] = comparisons;
         }
     }
-    void print_result() {
+    void print_result() 
+    {
         cout << '\n';
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < N; i++) 
+        {
+            for (int j = 0; j < 3; j++) 
+            {
                 cout << setw(3) << setprecision(10) << array[i][j] << " ";
             }
             cout << '\n';
@@ -227,48 +281,51 @@ public:
 
 int main()
 {
-    setlocale(LC_CTYPE, "rus");
     Statistic analysis(6);
-    int n, variant;
+    int n, choice;
 
-    do {
-        do {
-            cout << "Введите желаемый вариант заполнения массива: \n \t1) Заполнить нулевыми значениями \n \t2) Заполнить рандомными значениями\n \t0) Выход \n" << "Ваш выбор: ";
-            getCorrectInput(variant);
-        } while (variant < 0 || variant > 2);
+    do 
+    {
+        do 
+        {
+            cout << endl;
+            cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
+            cout << " * Enter the desired option for filling the array:   *" << endl;
+            cout << " *\t1 - Fill with zero values                    *" << endl;
+            cout << " *\t2 - Fill with random values                  *" << endl;
+            cout << " *\t0 - Exit                                     *" << endl;
+            cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
+            cout << "\t\t\t\t        Your choice: ";
+            
+            get_correct_input(choice);
+        } while (choice < 0 || choice > 2);
 
         /*do {
             cout << "Введите размер массива: ";
             getCorrectInput(n);
         } while (n < 0);*/
 
-        switch (variant)
+        switch (choice)
         {
-        case 0:
-            cout << "Выход\n";
-            break;
-        case 1: {
-            //Array array(n);
-            cout << "Анализ с нулевым массивом: " << endl;
-            analysis.zero_array();
-            analysis.print_result();
-            //array.printArray();
-            break;
+            case 0:
+                cout << "Exit\n";
+                break;
+            case 1: 
+                //Array array(n);
+                cout << "Zero array analysis: " << endl;
+                analysis.zero_array();
+                analysis.print_result();
+                //array.printArray();
+                break;
+            case 2: 
+                //Array array(n, true);
+                cout << "Random array analysis: " << endl;
+                analysis.full_array();
+                analysis.print_result();
+                //array.printArray();
+                break;
         }
-        case 2: {
-            //Array array(n, true);
-            cout << "Анализ с случайным массивом: " << endl;
-            analysis.full_array();
-            analysis.print_result();
-            //array.printArray();
-            break;
-        }
-        default:
-        {
-            cout << "Необходимо выбрать один из вариантов" << endl;
-        }
-        }
-    } while (variant != 0);
+    } while (choice != 0);
 
     system("pause");
     return 0;

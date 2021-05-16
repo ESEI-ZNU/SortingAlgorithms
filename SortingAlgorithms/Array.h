@@ -5,13 +5,15 @@
 #include <stdlib.h>
 using namespace std;
 
-class Array //класс массива с итератором, кострукторами, перегруженным оператором присваивания
+class Array  //Клас масиву з ітератором, конструктором, перевантаженим оператором присвоєння
 {
 private:
-    int* arr; //ссылка на массив
-    int N;  //кол-во элемнтов вмассиве
+    int* arr;  //Посилання на масив
+    int N;  //Кількість єлементів у масиві
 public:
-    struct Iterator //структура итератора, его катоегория тип на который ссылается и перегруженные операторы для работы итератора
+
+    //Структура ітератора, його категорія тип на який посилається та перевантажені оператори для роботи ітератора
+    struct Iterator
     {
         using iterator_category = std::forward_iterator_tag;
         using difference_type = std::ptrdiff_t;
@@ -21,84 +23,114 @@ public:
 
         Iterator(pointer ptr) : m_ptr(ptr) {}
 
-        reference operator*() const { return *m_ptr; }
-        pointer operator->() { return m_ptr; }
-        Iterator& operator++() { m_ptr++; return *this; }
-        Iterator operator++(int) { Iterator tmp = *this; (*this)++; return tmp; }
-        friend bool operator== (const Iterator& a, const Iterator& b) { return a.m_ptr == b.m_ptr; };
-        friend bool operator!= (const Iterator& a, const Iterator& b) { return a.m_ptr != b.m_ptr; };
+        reference operator*() const {
+            return *m_ptr;
+        }
+        pointer operator->() {
+            return m_ptr;
+        }
+        Iterator& operator++() {
+            m_ptr++; return *this;
+        }
+        Iterator operator++(int) {
+            Iterator tmp = *this;
+            (*this)++; return tmp;
+        }
+
+        friend bool operator== (const Iterator& a, const Iterator& b) {
+            return a.m_ptr == b.m_ptr;
+        };
+        friend bool operator!= (const Iterator& a, const Iterator& b) {
+            return a.m_ptr != b.m_ptr;
+        };
     private:
         pointer m_ptr;
     };
-    int Size() { return N; }
-    Iterator begin() { return Iterator(&arr[0]); }
-    Iterator end() { return Iterator(&arr[N]); }
-    Array& operator=(Array B) //перегрузка оператора присваивания для нашего класса
-    {
+
+    //Функція-геттер, повертає кількість елементів масиву
+    int Size() {
+        return N;
+    }
+    Iterator begin() {
+        return Iterator(&arr[0]);
+    }
+    Iterator end() {
+        return Iterator(&arr[N]);
+    }
+
+    //Перевантаження оператора присвоєння для класу Array
+    Array& operator=(Array B) {
         if (N)delete arr;
         N = B.N;
         arr = new int[N];
+
         for (int i = 0; i < N; i++)
             arr[i] = B.arr[i];
         return *this;
     }
-    Array() //конструктор без параметров
-    {
+
+    //Конструктор без параметрів
+    Array() {
         N = 0;
         arr = NULL;
     }
-    Array(int n) //конструктор с одним параметром и ручным вводом массива. далее по коду будет возможность использовать и этот метод ввода
-    {
+
+    //Конструктор з одним параметром для введення данних користувачем власноруч
+    Array(int n) {
         N = n;
         arr = new int[N];
         set();
     }
-    Array(int n, int widerand) //конструктор с двумя параметрами. второй параметр задает разброс рандомных значений в массиве. если задать 1 или менее = массив будет нулевой
-    {
+
+    //Конструктор з двума параметрами, другий параметр задає розкид випадкових значень у масиві, якщо задати 1 або менше, то масив буде нульовий
+    Array(int n, int widerand) {
         N = n;
-        if (widerand < 1)widerand = 1;
+        if (widerand < 1)
+            widerand = 1;
+
         arr = new int[N];
         for (int i = 0; i < N; i++)
             arr[i] = rand() % widerand;
     }
-    Array(const Array& B) //конструктор копирования
-    {
+
+    //Конструктор копіювання
+    Array(const Array& B) {
         N = B.N;
         arr = new int[N];
         for (int i = 0; i < N; i++)
             arr[i] = B.arr[i];
     }
-    ~Array() //деструктор
-    {
-        delete[] arr; //освобождение памяти
+
+    //Деструктор классу
+    ~Array() {
+        delete[] arr;  //Звільнення пам'яті
     }
-    void print_array() //печать массива массива с использовнием итератора
-    {
+
+    //Друк елементів масива з використанням ітератора
+    void print_array() {
         for (Iterator it = begin(); it != end(); ++it)
             cout << *it << " ";
     }
 
-    void set() //ввод элементов заданных пользователем... не используем. потому как рандомно заполнить и быстрее и легче а если надо, то далее в мэйне можно чуть код переделать
-    {
-        for (int i = 0; i < N; i++)
-        {
+    //Заповнення масива елементами які вводить користувач. (Не використовуємо, тому що випадково заповнти швидше та легше, але за необхідністю можна переробити код у мейні
+    void set() {
+        for (int i = 0; i < N; i++) {
             cout << "Enter " << i << " element of array: ";
             cin >> arr[i];
         }
     }
-    // метод сортировки пузырьком 
-    void bubble_sort(long long int& iterations, long long int& comparisons, long long int& shuffle)
-    {
-        for (int i = 0; i < N; ++i)
-        {
-            iterations++;//подсчет итераций в каждом цикле
-            for (int j = 0; j < N - i; j++)
-            {
-                iterations++;//подсчет итераций в каждом цикле
-                comparisons++;//подсчет сравнений перед каждым сравнением
-                if (arr[j] < arr[j + 1])
-                {
-                    shuffle++;//подсчет перестановки перед каждой перестановкой
+
+    //Метод бульбашкового сортування
+    void bubble_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
+        for (int i = 0; i < N; ++i) {
+            iterations++;  //Підрахунок ітерацій у кожному циклі 
+
+            for (int j = 0; j < N - i; j++) {
+                iterations++;  //Підрахунок ітерацій у кожному циклі 
+                comparisons++;  //Підрахунок порівнянь перед кожним порівнянням
+
+                if (arr[j] < arr[j + 1]) {
+                    shuffle++;  //Підрахунок перестановок перед кожною перестановкою 
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -106,7 +138,8 @@ public:
             }
         }
     }
-    //метод шейкерного сортирования
+
+    //Метод шейкерного сортування
     void cocktail_sort(long long int& iterations, long long int& comparisons, long long int& shuffle)
     {
         int count = N;
@@ -115,29 +148,29 @@ public:
 
         while ((left < right) && flag > 0)
         {
-            iterations++;//подсчет итераций в каждом цикле
+            iterations++;  //Підрахунок ітерацій у кожному циклі 
             flag = 0;
-            for (int i = left; i < right; i++)
-            {
-                iterations++; //подсчет итераций в каждом цикле
-                comparisons++;//подсчет сравнений перед каждым сравнением
-                if (arr[i] < arr[i + 1])
-                {
-                    shuffle++;//подсчет перестановки перед каждой перестановкой
+
+            for (int i = left; i < right; i++) {
+                iterations++;  //Підрахунок ітерацій у кожному циклі 
+                comparisons++;  //Підрахунок порівнянь перед кожним порівнянням
+
+                if (arr[i] < arr[i + 1]) {
+                    shuffle++;  //Підрахунок перестановок перед кожною перестановкою 
                     double t = arr[i];
                     arr[i] = arr[i + 1];
                     arr[i + 1] = t;
                     flag = 1;
                 }
             }
+
             right--;
-            for (int i = right; i > left; i--)
-            {
-                iterations++; //подсчет итераций в каждом цикле
-                comparisons++;//подсчет сравнений перед каждым сравнением
-                if (arr[i - 1] < arr[i])
-                {
-                    shuffle++;//подсчет перестановки перед каждой перестановкой
+            for (int i = right; i > left; i--) {
+                iterations++;  //Підрахунок ітерацій у кожному циклі 
+                comparisons++;  //Підрахунок порівнянь перед кожним порівнянням
+
+                if (arr[i - 1] < arr[i]) {
+                    shuffle++;  //Підрахунок перестановок перед кожною перестановкою 
                     double t = arr[i];
                     arr[i] = arr[i - 1];
                     arr[i - 1] = t;
@@ -150,19 +183,28 @@ public:
     void onemore_sort0(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
     void onemore_sort1(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
 
-
-    int Max() //поиск максимума в массиве через итератор
+    //Пошук максимума серед елементів масива з використанням ітератора
+    int Max()
     {
         int max = *begin();
-        for (Iterator it = begin(); it != end(); ++it)
-            if (max < *it)max = *it;
+        for (Iterator it = begin(); it != end(); ++it) {
+            if (max < *it) {
+                max = *it;
+            }
+        }
         return max;
+
     }
-    int Min()//поиск минимума
+
+    //Пошук мінімума серед елементів масива з використанням ітератора
+    int Min()
     {
         int min = *begin();
-        for (Iterator it = begin(); it != end(); ++it)
-            if (min > *it)min = *it;
+        for (Iterator it = begin(); it != end(); ++it) {
+            if (min > *it) {
+                min = *it;
+            }
+        }
         return min;
     }
 };

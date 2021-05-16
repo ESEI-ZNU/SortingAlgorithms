@@ -18,11 +18,13 @@
     <ClCompile Include="Source.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="Array.cpp">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Array.h">
       <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
-    <ClCompile Include="Statistic.cpp">
+    </ClInclude>
+    <ClInclude Include="Statistics.h">
       <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
+    </ClInclude>
   </ItemGroup>
 </Project>

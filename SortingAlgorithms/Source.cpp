@@ -1,14 +1,8 @@
-#include <iostream>
-#include <ctime>
-#include <iomanip>
-#include <stdlib.h>
-#include <typeinfo>
-#include "Array.cpp"
-#include "Statistic.cpp"
-
+#include "Array.h"
+#include "Statistics.h"
 using namespace std;
 
-void get_correct_input(int& value)
+void get_correct_input(int& value)//метод проверки введенных данных на корректность. собираемся вводить только числовые значения
 {
     cin >> value;
     while (cin.fail())
@@ -22,12 +16,15 @@ void get_correct_input(int& value)
 
 int main()
 {
-    Statistic analysis(6);
-    int n, choice;
-
-    do 
+    srand(time(NULL));//запускаем рандомайзер
+    const int NumberOfSortType = 2;// колво методов сортировок (если добавите их в классе Array)
+    Statistic analysis(NumberOfSortType); //переменная нашего класса статистики. передаем ей колво методов сортировок
+    Array arrayToSort[NumberOfSortType];//создаем массив нашего класса (получается массив массивов), тоже по колву методов сортировок. потому как сортировать будем хоть одно и тоже, 
+                                        //но они должны быть похожие но занимать разное пространство в памяти
+    int arraySize = 0, choice;//переменные для хранения размера массива и нашего выбора
+    do//в цикле будем запрашиваьт что хочет пользователь и соответственно будем реагировать на его выбор
     {
-        do 
+        do//запросим чем заполнить массив, нулями или рандомными числами
         {
             cout << endl;
             cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
@@ -37,38 +34,58 @@ int main()
             cout << " *\t0 - Exit                                     *" << endl;
             cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
             cout << "\t\t\t\t        Your choice: ";
-            
+
             get_correct_input(choice);
-        } while (choice < 0 || choice > 2);
+        } while (choice < 0 || choice > 2);//повторяем цикл пока вводят некорректные данные
 
-        /*do {
-            cout << "Введите размер массива: ";
-            getCorrectInput(n);
-        } while (n < 0);*/
-
-        switch (choice)
+        if (choice > 0)//если выбор не нулевой, то запросим размер массива
         {
-            case 0:
-                cout << "Exit\n";
-                break;
-            case 1: 
-                //Array array(n);
-                cout << "Zero array analysis: " << endl;
-                analysis.zero_array();
-                analysis.print_result();
-                //array.printArray();
-                break;
-            case 2: 
-                //Array array(n, true);
-                cout << "Random array analysis: " << endl;
-                analysis.full_array();
-                analysis.print_result();
-                //array.printArray();
-                break;
+            do
+            {
+                cout << "Input array size: ";
+                get_correct_input(arraySize);
+            } while (arraySize < 1);//повторяем запрос размерности массива до тех пор пока будут вводить некорректные значения
         }
-    } while (choice != 0);
 
-    system("pause");
+
+        Array blank(arraySize, 500 * (choice - 1));//вызываем конструктор с указанием диапазона рандомных значений (если будет выбрано нулевой массив, т.е. choise будет равен 1
+                                                   //то 500*(1-1) даст 0, и массив заполнится нулями
+        //Array blank(arraySize);//расскоментировать эту строчку для ввода массива вручную. а предыдущю закомментить. сделано так потому что слишком много выбираний по пунктам
+
+        //blank - это переменая нашего класса. мы ее создали, чтобы потом ею заполнить наш массив массивов. ониж должны быть одинаковыми
+        for (int i = 0; i < NumberOfSortType; i++)//заполняем наш массив массивов, массивом (blank) который мы создали (не важно какой он)
+            arrayToSort[i] = blank;
+
+        switch (choice)//в зависимости от выбора пользователя напечатамм ему что он выбрал
+        {
+        case 0:
+            cout << "Exit\n";
+            break;
+        case 1:
+            cout << "Zero array analysis: " << endl;
+            break;
+        case 2:
+            cout << "Random array analysis: " << endl;
+            break;
+        }
+        if (choice > 0)//и если он выбрал не выход из программы
+        {
+            analysis.sort_arrays(arrayToSort);//отсортируем наши массивы, для этого в метод класса статисктики передадим ссылку на наши массивы
+            analysis.print_result();//и распечатаем результат работы сортировок
+            cout << "\nMinimal and Maximal elements are :" << arrayToSort[0].Min() << "  " << arrayToSort[0].Max() << "\n\n\n";// а также продемонстрируем работу поиска мин и макс в массиве
+        }
+    } while (choice != 0);//пока выбираем не выход из программы повторяем ее работу. пусть пользователь порадуется
+
+    //system("pause");//
     return 0;
 }
+// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
+// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 
+// Советы по началу работы 
+//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
+//   2. В окне Team Explorer можно подключиться к системе управления версиями.
+//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
+//   4. В окне "Список ошибок" можно просматривать ошибки.
+//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
+//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.

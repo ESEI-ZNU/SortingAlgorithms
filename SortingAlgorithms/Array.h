@@ -69,7 +69,6 @@ public:
     ///<summary>
     ///Overloading the assignment operator for the Array class
     ///</summary>
-    /// <returns> number of elements of the array </returns>
     Array& operator=(Array B) {
         if (N)delete arr;
         N = B.N;
@@ -82,7 +81,7 @@ public:
 
     //Author - Hnybidenko
     ///<summary>
-    ///Ñonstructor
+    ///Constructor
     ///</summary>
     Array() {
         N = 0;
@@ -91,7 +90,7 @@ public:
 
     //Author - Hnybidenko
     ///<summary>
-    ///Ñonstructor for manual input
+    ///Constructor for manual input
     ///</summary>
     ///<param name="n"> - number of elements </param>
     Array(int n) {
@@ -102,7 +101,7 @@ public:
 
     //Author - Hnybidenko
     ///<summary>
-    ///Ñonstructor for random values
+    ///Constructor for random values
     ///</summary>
     ///<param name="n"> - number of elements </param>
     ///<param name="widerand"> - flag </param>
@@ -118,7 +117,7 @@ public:
 
     //Author - Hnybidenko
     ///<summary>
-    ///Ñonstructor for copying
+    ///Constructor for copying
     ///</summary>
     ///<param name="B"> - link to an array for a copy </param>
     Array(const Array& B) {

@@ -135,7 +135,7 @@ public:
             switch (i) {  
             
             case 0:
-                cout << " Buble  ";
+                cout << "Buble   ";
                 break;
 
             case 1:

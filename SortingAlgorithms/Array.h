@@ -122,63 +122,59 @@ public:
 
     //Метод бульбашкового сортування
     void bubble_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
-        for (int i = 0; i < N; ++i) {
-            iterations++;  //Підрахунок ітерацій у кожному циклі 
-
-            for (int j = 0; j < N - i; j++) {
-                iterations++;  //Підрахунок ітерацій у кожному циклі 
-                comparisons++;  //Підрахунок порівнянь перед кожним порівнянням
-
-                if (arr[j] < arr[j + 1]) {
-                    shuffle++;  //Підрахунок перестановок перед кожною перестановкою 
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+        int i, j, x, k;
+        for (i = 1; i < N; i++)
+        {
+            iterations++;
+            for (j = N - 1; j >= i; j--) {
+                comparisons++;
+                if (arr[j - 1] > arr[j])
+                {
+                    shuffle++;
+                    x = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = x;
                 }
             }
+
         }
     }
 
     //Метод шейкерного сортування
     void cocktail_sort(long long int& iterations, long long int& comparisons, long long int& shuffle)
     {
-        int count = N;
-        int left = 0, right = count - 1;
-        int flag = 1;
-
-        while ((left < right) && flag > 0)
-        {
-            iterations++;  //Підрахунок ітерацій у кожному циклі 
-            flag = 0;
-
-            for (int i = left; i < right; i++) {
-                iterations++;  //Підрахунок ітерацій у кожному циклі 
-                comparisons++;  //Підрахунок порівнянь перед кожним порівнянням
-
-                if (arr[i] < arr[i + 1]) {
-                    shuffle++;  //Підрахунок перестановок перед кожною перестановкою 
-                    double t = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = t;
-                    flag = 1;
+        int i = N - 1, j, k, x, l, r;
+        l = 1;
+        r = N - 1;
+        do {
+            for (j = r; j >= l; j--) {
+                comparisons++;
+                if (arr[j - 1] > arr[j])
+                {
+                    shuffle++;
+                    x = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = x;
+                    i = j;
                 }
             }
+            iterations++;
+            l = i + 1;
 
-            right--;
-            for (int i = right; i > left; i--) {
-                iterations++;  //Підрахунок ітерацій у кожному циклі 
-                comparisons++;  //Підрахунок порівнянь перед кожним порівнянням
-
-                if (arr[i - 1] < arr[i]) {
-                    shuffle++;  //Підрахунок перестановок перед кожною перестановкою 
-                    double t = arr[i];
-                    arr[i] = arr[i - 1];
-                    arr[i - 1] = t;
-                    flag = 1;
+            for (j = l; j <= r; j++) {
+                comparisons++;
+                if (arr[j - 1] > arr[j])
+                {
+                    shuffle++;
+                    x = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = x;
+                    i = j;
                 }
             }
-            left++;
-        }
+            iterations++;
+            r = i - 1;
+        } while (l <= r);
     }
     void onemore_sort0(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
     void onemore_sort1(long long int& iterations, long long int& comparisons, long long int& shuffle) {}

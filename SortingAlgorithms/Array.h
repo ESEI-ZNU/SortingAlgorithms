@@ -5,14 +5,17 @@
 #include <stdlib.h>
 using namespace std;
 
-class Array  //Клас масиву з ітератором, конструктором, перевантаженим оператором присвоєння
+//Author - Hnybidenko
+//Array class with iterator, constructor, overloaded assignment operator
+class Array 
 {
 private:
-    int* arr;  //Посилання на масив
-    int N;  //Кількість єлементів у масиві
+    int* arr;  //Link to the array
+    int N;  //The number of elements in the array
 public:
 
-    //Структура ітератора, його категорія тип на який посилається та перевантажені оператори для роботи ітератора
+    //Author - Hnybidenko and Bigun
+    //The structure of the iterator, its category, the type referenced and overloaded operators for the operation of the iterator
     struct Iterator
     {
         using iterator_category = std::forward_iterator_tag;
@@ -47,7 +50,11 @@ public:
         pointer m_ptr;
     };
 
-    //Функція-геттер, повертає кількість елементів масиву
+    //Author - Hnybidenko
+    ///<summary>
+    ///Getter function for the number of elements
+    ///</summary>
+    /// <returns> number of elements of the array </returns>
     int Size() {
         return N;
     }
@@ -58,7 +65,11 @@ public:
         return Iterator(&arr[N]);
     }
 
-    //Перевантаження оператора присвоєння для класу Array
+    //Author - Hnybidenko
+    ///<summary>
+    ///Overloading the assignment operator for the Array class
+    ///</summary>
+    /// <returns> number of elements of the array </returns>
     Array& operator=(Array B) {
         if (N)delete arr;
         N = B.N;
@@ -69,20 +80,32 @@ public:
         return *this;
     }
 
-    //Конструктор без параметрів
+    //Author - Hnybidenko
+    ///<summary>
+    ///Сonstructor
+    ///</summary>
     Array() {
         N = 0;
         arr = NULL;
     }
 
-    //Конструктор з одним параметром для введення данних користувачем власноруч
+    //Author - Hnybidenko
+    ///<summary>
+    ///Сonstructor for manual input
+    ///</summary>
+    ///<param name="n"> - number of elements </param>
     Array(int n) {
         N = n;
         arr = new int[N];
         set();
     }
 
-    //Конструктор з двума параметрами, другий параметр задає розкид випадкових значень у масиві, якщо задати 1 або менше, то масив буде нульовий
+    //Author - Hnybidenko
+    ///<summary>
+    ///Сonstructor for random values
+    ///</summary>
+    ///<param name="n"> - number of elements </param>
+    ///<param name="widerand"> - flag </param>
     Array(int n, int widerand) {
         N = n;
         if (widerand < 1)
@@ -93,7 +116,11 @@ public:
             arr[i] = rand() % widerand;
     }
 
-    //Конструктор копіювання
+    //Author - Hnybidenko
+    ///<summary>
+    ///Сonstructor for copying
+    ///</summary>
+    ///<param name="B"> - link to an array for a copy </param>
     Array(const Array& B) {
         N = B.N;
         arr = new int[N];
@@ -101,18 +128,27 @@ public:
             arr[i] = B.arr[i];
     }
 
-    //Деструктор классу
+    //Author - Hnybidenko
+    ///<summary>
+    ///Destructor
+    ///</summary>
     ~Array() {
-        delete[] arr;  //Звільнення пам'яті
+        delete[] arr; 
     }
 
-    //Друк елементів масива з використанням ітератора
+    //Author - Hnybidenko
+    ///<summary>
+    ///Print array elements using an iterator
+    ///</summary>
     void print_array() {
         for (Iterator it = begin(); it != end(); ++it)
             cout << *it << " ";
     }
 
-    //Заповнення масива елементами які вводить користувач. (Не використовуємо, тому що випадково заповнти швидше та легше, але за необхідністю можна переробити код у мейні
+    //Author - Hnybidenko
+    ///<summary>
+    ///Filling the array with elements entered by the user
+    ///</summary>
     void set() {
         for (int i = 0; i < N; i++) {
             cout << "Enter " << i << " element of array: ";
@@ -120,7 +156,13 @@ public:
         }
     }
 
-    //Метод бульбашкового сортування
+    //Author - Ryabko
+    ///<summary>
+    ///Bubble sort method
+    ///</summary>
+    ///<param name="iterations"> - number of iterations </param>
+    ///<param name="comparisons"> - number of comparisons </param>
+    ///<param name="shuffle"> - number of shuffle </param>
     void bubble_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
         int i, j, x, k;
         for (i = 1; i < N; i++)
@@ -140,7 +182,13 @@ public:
         }
     }
 
-    //Метод шейкерного сортування
+    //Author - Ryabko
+    ///<summary>
+    ///Coctail sort method
+    ///</summary>
+    ///<param name="iterations"> - number of iterations </param>
+    ///<param name="comparisons"> - number of comparisons </param>
+    ///<param name="shuffle"> - number of shuffle </param>
     void cocktail_sort(long long int& iterations, long long int& comparisons, long long int& shuffle)
     {
         int i = N - 1, j, k, x, l, r;
@@ -179,7 +227,10 @@ public:
     void onemore_sort0(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
     void onemore_sort1(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
 
-    //Пошук максимума серед елементів масива з використанням ітератора
+    //Author - Hnybidenko
+    ///<summary>
+    ///Find the maximum among the elements of the array using an iterator
+    ///</summary>
     int Max()
     {
         int max = *begin();
@@ -192,7 +243,10 @@ public:
 
     }
 
-    //Пошук мінімума серед елементів масива з використанням ітератора
+    //Author - Hnybidenko
+    ///<summary>
+    ///Find the minimum among the elements of the array using an iterator
+    ///</summary>
     int Min()
     {
         int min = *begin();

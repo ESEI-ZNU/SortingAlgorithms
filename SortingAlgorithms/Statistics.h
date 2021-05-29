@@ -6,44 +6,53 @@
 
 using namespace std;
 
-//Класс для отримання статистики заданой колекції
+//Author - Bigun
+//Class to obtain statistics for a given collection
 class Statistic {
 private:
-    double** array;  //Масив для показань статистики
-    int N;  //За кількістю методів сортування (в даному випадку буде 2)
+    double** array;  
+    int N; 
 public:
 
-    //Конструктор статистики, в нього передаємо кількість методів сортування
+    //Author - Bigun
+    ///<summary>
+    ///Сonstructorof statistics, we pass the number of sorting methods
+    ///</summary>
+    ///<param name="n"> - number of sorts </param>
     Statistic(int n) {  
         N = n;
         array = new double* [N];
 
         for (int i = 0; i < N; i++) {
-            array[i] = new double[4];  //Для кожного методу будемо зберігати 4 показника, час, колво циклів, колво порівнянь і колво перестановок
+            array[i] = new double[4]; 
         }
     }
 
-    //Сортування масиву будемо викликати з класу статистики
-    void sort_arrays(Array* a) {  //Передаємо посилання на наші масиви (їх буде столькоже скільки і угруповань, і містити вони будуть однакові дані, для чесності порівняння методів)
-        for (int i = 0; i < N; i++) {  //Цикл за кількість методів сортування, в даному випадку 2
+    //Author - Bigun
+    ///<summary>
+    ///Method of obtaining statistical data
+    ///</summary>
+    ///<param name="a"> - link array </param>
+    void sort_arrays(Array* a) { 
+        for (int i = 0; i < N; i++) {  //Cycle for the number of sorting methods, in this case 2
         
-            long long iterations = 0, comparisons = 0, reshuffle = 0;  //Змінні для зберігання ітерацій, порівнянь і перстановок
-            clock_t time1 = clock();  //Запам'ятовуємо час
+            long long iterations = 0, comparisons = 0, reshuffle = 0;  //Variables for storing iterations, comparisons and permutations
+            clock_t time1 = clock();  //Remember the time
             
-            //Обираємо метод сортування
+            //Choose the sorting method
             switch (i) {  
             
-            //Метод бульбашкового сортування
+            //Bubble sorting method
             case 0:  
                 cout << "\nBubble sort analysis\n";
 
-                //Якщо розмір масиву невеликий (менше 20) то будемо виводити елементи масиву на екран до і після сортування за допомогою ітератора 
+                //If the size of the array is small (less than 20) then we will display the elements of the array on the screen before and after sorting with an iterator 
                 if (a[i].Size() < 20) { 
                     cout << "Before\n";
                     a[i].print_array(); 
                 }
 
-                //Викликаємо метод сортування та сортуємо
+                //Call the sort method and sort
                 a[i].bubble_sort(iterations, comparisons, reshuffle);  
 
                 if (a[i].Size() < 20) { 
@@ -53,17 +62,17 @@ public:
                 cout << "\nBubble sort analysis done\n";
                 break;
 
-            //Метод шейкерного сортування
+            //Shaker sorting method
             case 1:  
                 cout << "\nCocktail sort analysis\n";
 
-                //Якщо розмір масиву невеликий (менше 20) то будемо виводити елементи масиву на екран до і після сортування за допомогою ітератора 
+                //If the size of the array is small (less than 20) then we will display the elements of the array on the screen before and after sorting with an iterator 
                 if (a[i].Size() < 20) { 
                     cout << "Before\n"; 
                     a[i].print_array(); 
                 }
 
-                //Викликаємо метод сортування та сортуємо
+                //Call the sort method and sort
                 a[i].cocktail_sort(iterations, comparisons, reshuffle);  
 
                 if (a[i].Size() < 20) { 
@@ -73,18 +82,15 @@ public:
                 cout << "\nCocktail sort analysis done\n";
                 break;
 
-            //Метод сортування 3
+            //Sorting method 3
             case 2:  
                 cout << "\nonemore_sort0 sort analysis\n";
 
-                //Якщо розмір масиву невеликий (менше 20) то будемо виводити елементи масиву на екран до і після сортування за допомогою ітератора
                 if (a[i].Size() < 20) { 
                     cout << "Before\n"; 
                     a[i].print_array();  
                 }  
 
-
-                //Сортування додатковим методом
                 a[i].onemore_sort0(iterations, comparisons, reshuffle);  
 
                 if (a[i].Size() < 20) { 
@@ -94,17 +100,15 @@ public:
                 cout << "\nonemore_sort0 sort analysis done\n";
                 break;
 
-            //Метод сортування 4
+            //Sorting method 4
             case 3:  
                 cout << "\nonemore_sort1 sort analysis\n";
 
-                //Якщо розмір масиву невеликий (менше 20) то будемо виводити елементи масиву на екран до і після сортування за допомогою ітератора
                 if (a[i].Size() < 20) { 
                     cout << "Before\n"; 
                     a[i].print_array(); 
                 }  
 
-                //Сортування ще одним додатковим методом
                 a[i].onemore_sort1(iterations, comparisons, reshuffle);  
 
                 if (a[i].Size() < 20) { 
@@ -114,16 +118,19 @@ public:
                 break;
             }
 
-            clock_t time2 = clock();  //Дивимося час закінчення
+            clock_t time2 = clock();  //Look at the end time
 
-            array[i][0] = (double)(time2 - time1) / CLOCKS_PER_SEC;  //Різницю від часу закінчення сортування і початку переводимо в секунди і збережемо в масив показників
-            array[i][1] = iterations;  //Зберігаємо в масив показники ітерацій
-            array[i][2] = comparisons;  //Зберігаємо в масив показники порівнянь
-            array[i][3] = reshuffle;  //Зберігаємо в масив показники перестановок
+            array[i][0] = (double)(time2 - time1) / CLOCKS_PER_SEC;  //The difference from the end time of sortingand the beginning is translated into secondsand saved in an array of indicators
+            array[i][1] = iterations;  // Store iterations of iterations in an array    
+            array[i][2] = comparisons;  //Store in an array indicators of comparisons
+            array[i][3] = reshuffle;  //Store in an array indicators of permutations
         }
     }
 
-    //Метод виведення показників статистики
+    //Author - Bigun
+    ///<summary>
+    ///Method of deriving statistics
+    ///</summary>
     void print_result() {  
     
         cout << '\n';
@@ -131,7 +138,7 @@ public:
 
         for (int i = 0; i < N; i++) {
         
-            //Виводимо назву методу. Кількість кейсів відповідно до кількості методів сортувань в класі (можна додати)
+            //Print the name of the method. Number of cases according to the number of sorting methods in the class (can be added)
             switch (i) {  
             
             case 0:

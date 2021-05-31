@@ -82,39 +82,39 @@ public:
                 cout << "\nCocktail sort analysis done\n";
                 break;
 
-            //Sorting method 3
+            //Selection sort method 
             case 2:  
-                cout << "\nonemore_sort0 sort analysis\n";
+                cout << "\nSelection sort analysis\n";
 
                 if (a[i].Size() < 20) { 
                     cout << "Before\n"; 
                     a[i].print_array();  
                 }  
 
-                a[i].onemore_sort0(iterations, comparisons, reshuffle);  
+                a[i].selection_sort(iterations, comparisons, reshuffle);
 
                 if (a[i].Size() < 20) { 
                     cout << "\nAfter\n"; 
                     a[i].print_array(); 
                 }
-                cout << "\nonemore_sort0 sort analysis done\n";
+                cout << "\nSelection sort analysis done\n";
                 break;
 
-            //Sorting method 4
+            //Insertion sort method 
             case 3:  
-                cout << "\nonemore_sort1 sort analysis\n";
+                cout << "\nInsertion sort analysis\n";
 
                 if (a[i].Size() < 20) { 
                     cout << "Before\n"; 
                     a[i].print_array(); 
                 }  
 
-                a[i].onemore_sort1(iterations, comparisons, reshuffle);  
+                a[i].insertion_sort(iterations, comparisons, reshuffle);
 
                 if (a[i].Size() < 20) { 
                     cout << "\nAfter\n"; a[i].print_array(); 
                 }
-                cout << "\nonemore_sort1 sort analysis done\n";
+                cout << "\nInsertion sort analysis done\n";
                 break;
             }
 
@@ -142,19 +142,19 @@ public:
             switch (i) {  
             
             case 0:
-                cout << "Buble   ";
+                cout << "Buble    ";
                 break;
 
             case 1:
-                cout << "Cocktail";
+                cout << "Cocktail ";
                 break;
 
             case 2:
-                cout << "onemore0";
+                cout << "Selection";
                 break;
 
             case 3:
-                cout << "onemore1";
+                cout << "Insertion";
                 break;
             }
 

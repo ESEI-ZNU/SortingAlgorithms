@@ -21,7 +21,7 @@ void get_correct_input(int& value) {
 int main()
 {
     srand(time(NULL));  //Run the randomizer
-    const int NumberOfSortType = 2;  //Number of sorting methods
+    const int NumberOfSortType = 4;  //Number of sorting methods
     Statistic analysis(NumberOfSortType);  //Statistics class variable. We pass it the number of sorting methods
     Array arrayToSort[NumberOfSortType];  //Сreate an array of arrays of our class
     int arraySize = 0, choice;  //Variable to store the size of the array and our selection

@@ -169,8 +169,7 @@ public:
             iterations++;
             for (j = N - 1; j >= i; j--) {
                 comparisons++;
-                if (arr[j - 1] > arr[j])
-                {
+                if (arr[j - 1] > arr[j]) {
                     shuffle++;
                     x = arr[j - 1];
                     arr[j - 1] = arr[j];
@@ -188,8 +187,7 @@ public:
     ///<param name="iterations"> - number of iterations </param>
     ///<param name="comparisons"> - number of comparisons </param>
     ///<param name="shuffle"> - number of shuffle </param>
-    void cocktail_sort(long long int& iterations, long long int& comparisons, long long int& shuffle)
-    {
+    void cocktail_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
         int i = N - 1, j, k, x, l, r;
         l = 1;
         r = N - 1;
@@ -223,8 +221,61 @@ public:
             r = i - 1;
         } while (l <= r);
     }
-    void onemore_sort0(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
-    void onemore_sort1(long long int& iterations, long long int& comparisons, long long int& shuffle) {}
+
+    //Author - Tsiluiko
+    ///<summary>
+    ///Selection sort method
+    ///</summary>
+    ///<param name="iterations"> - number of iterations </param>
+    ///<param name="comparisons"> - number of comparisons </param>
+    ///<param name="shuffle"> - number of shuffle </param>
+    void selection_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
+        int i, j, x, k, m;
+        iterations++;
+
+        for (i = 0; i < N - 1; i++) {
+            x = arr[i];
+            k = i;
+
+            for (j = i + 1; j < N; j++) {
+                comparisons++;
+                if (arr[j] < x) {
+                    k = j;
+                    x = arr[k];
+
+                }
+            }
+            shuffle++;
+            arr[k] = arr[i];
+            arr[i] = x;
+        }
+    }
+
+    //Author - Tsiluiko
+    ///<summary>
+    ///Insertion sort method
+    ///</summary>
+    ///<param name="iterations"> - number of iterations </param>
+    ///<param name="comparisons"> - number of comparisons </param>
+    ///<param name="shuffle"> - number of shuffle </param>
+    void insertion_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
+        int i, j, x, k;
+
+        for (i = 1; i < N; i++) {
+            iterations++;
+            x = arr[i]; 
+            j = i;
+            comparisons++;
+
+            while ((j > 0) && (x < arr[j - 1])) {
+                comparisons++;
+                shuffle++;
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = x;
+        }
+    }
 
     //Author - Hnybidenko
     ///<summary>

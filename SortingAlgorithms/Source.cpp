@@ -53,7 +53,8 @@ int main()
         //Call the constructor with a range of random numbers (if you choose a zero array, then 500 * (1-1) will give 0, and the array will be filled with zeros)
         Array blank(arraySize, 500 * (choice - 1));
 
-        //Array blank(arraySize);  //Uncomment the line to enter the array yourself, and comment on the previous one
+        //Uncomment the line to enter the array yourself, and comment on the previous one
+        //Array blank(arraySize);  
 
         //Fill in our array of arrays, an array (blank) which we created
         for (int i = 0; i < NumberOfSortType; i++)

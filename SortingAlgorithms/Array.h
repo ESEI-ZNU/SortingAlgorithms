@@ -276,7 +276,76 @@ public:
             arr[j] = x;
         }
     }
+    //Author - Smirnov
+    ///<summary>
+    ///Merge sort method
+    ///</summary>
+    ///<param name="iterations"> - number of iterations </param>
+    ///<param name="comparisons"> - number of comparisons </param>
+    ///<param name="shuffle"> - number of shuffle </param>
+    void merge_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
+        int A, p, r, q;
+        int n1, n2;
+        n1 = q - p;
+        n2 = r - q;
+        int* L = new int[n1];
+        int* R = new int[n2];
+        for (int i = 0; i <= n1; ++i)
+            L[i] = A[i];
 
+        for (int j = 0; j <= n2; ++j)
+            R[j] = A[j + q + 1];
+            n1 = n2 = 1;
+        for (int k = p; k < r; ++k)
+        {
+        if (L[n1] > R[n2] && n1 < l && n1 < k)
+            {
+                A[k] = L[n1];
+                n1++;
+            }
+            else
+            {
+                A[k] = R[n2];
+                n2++;
+            }
+        }
+    }
+
+    //Author - Smirnov
+   ///<summary>
+   ///Merge quick method
+   ///</summary>
+   ///<param name="iterations"> - number of iterations </param>
+   ///<param name="comparisons"> - number of comparisons </param>
+   ///<param name="shuffle"> - number of shuffle </param>
+    void quick_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
+        int i = low;
+        int j = high;
+        int pivot = array[(i + j) / 2];
+        int temp;
+
+        while (i <= j)
+        {
+            while (array[i] < pivot)
+                i++;
+            while (array[j] > pivot)
+                j--;
+            if (i <= j)
+            {
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        if (j > low)
+            quickSort(array, low, j);
+        if (i < high)
+            quickSort(array, i, high);
+    
+    }
+    /// 
     //Author - Hnybidenko
     ///<summary>
     ///Find the maximum among the elements of the array using an iterator

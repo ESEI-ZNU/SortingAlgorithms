@@ -176,7 +176,6 @@ public:
                     arr[j] = x;
                 }
             }
-
         }
     }
 
@@ -194,8 +193,7 @@ public:
         do {
             for (j = r; j >= l; j--) {
                 comparisons++;
-                if (arr[j - 1] > arr[j])
-                {
+                if (arr[j - 1] > arr[j]) {
                     shuffle++;
                     x = arr[j - 1];
                     arr[j - 1] = arr[j];
@@ -208,8 +206,7 @@ public:
 
             for (j = l; j <= r; j++) {
                 comparisons++;
-                if (arr[j - 1] > arr[j])
-                {
+                if (arr[j - 1] > arr[j]) {
                     shuffle++;
                     x = arr[j - 1];
                     arr[j - 1] = arr[j];
@@ -231,9 +228,9 @@ public:
     ///<param name="shuffle"> - number of shuffle </param>
     void selection_sort(long long int& iterations, long long int& comparisons, long long int& shuffle) {
         int i, j, x, k, m;
-        iterations++;
-
+        
         for (i = 0; i < N - 1; i++) {
+            iterations++;
             x = arr[i];
             k = i;
 
@@ -242,7 +239,6 @@ public:
                 if (arr[j] < x) {
                     k = j;
                     x = arr[k];
-
                 }
             }
             shuffle++;
@@ -265,14 +261,15 @@ public:
             iterations++;
             x = arr[i]; 
             j = i;
-            comparisons++;
 
+            comparisons++;
             while ((j > 0) && (x < arr[j - 1])) {
                 comparisons++;
-                shuffle++;
+                
                 arr[j] = arr[j - 1];
                 j--;
             }
+            shuffle++;
             arr[j] = x;
         }
     }

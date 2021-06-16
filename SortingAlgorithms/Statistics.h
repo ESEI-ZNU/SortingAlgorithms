@@ -39,7 +39,7 @@ public:
             long long iterations = 0, comparisons = 0, reshuffle = 0;  //Variables for storing iterations, comparisons and permutations
             clock_t time1 = clock();  //Remember the time
             
-            //Choose the sorting method
+            //Choose the sort method
             switch (i) {  
             
             //Bubble sorting method
@@ -62,7 +62,7 @@ public:
                 cout << "\nBubble sort analysis done\n";
                 break;
 
-            //Shaker sorting method
+            //Shaker sortmethod
             case 1:  
                 cout << "\nCocktail sort analysis\n";
 
@@ -134,7 +134,7 @@ public:
     void print_result() {  
     
         cout << '\n';
-        cout << "            time | iterations | comparsions | reshuffles\n";
+        cout << "                time|  iterations| comparsions|  reshuffles|\n";
 
         for (int i = 0; i < N; i++) {
         
@@ -159,7 +159,7 @@ public:
             }
 
             for (int j = 0; j < 4; j++)
-                cout << setw(10) << setprecision(10) << array[i][j] << " ";
+                cout << setw(10) << setprecision(10) << array[i][j] << " | ";
             cout << '\n';
         }
     }

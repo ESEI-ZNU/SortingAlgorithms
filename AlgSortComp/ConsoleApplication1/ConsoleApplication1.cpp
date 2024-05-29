@@ -64,8 +64,142 @@ public:
     }
 };
 
+// Class to compare different sorting algorithms
+class SortingComparison
+{
+public:
+    // Various sorting algorithms
+    static void bubbleSort(Array& arr);
+    static void shakerSort(Array& arr);
+    static void insertionSort(Array& arr);
+    static void selectionSort(Array& arr);
+    static void mergeSort(Array& arr);
+    static void quickSort(Array& arr);
+    static void measurePerformance(const string& sortMethodName, const function<void(Array&)>& sortMethod, Array& arr);
+private:
+    // Helper functions for merge sort and quick sort
+    static void mergeSortRecursive(int* arr, size_t left, size_t right);
+    static void quickSortRecursive(int* arr, size_t left, size_t right);
+    static void swap(int& a, int& b);
+};
+
+// Merge sort algorithm
+void SortingComparison::mergeSort(Array& arr)
+{
+    mergeSortRecursive(arr.getData(), 0, arr.getSize() - 1);
+}
+
+// Recursive function for merge sort
+void SortingComparison::mergeSortRecursive(int* arr, size_t left, size_t right)
+{
+    if (left < right)
+    {
+        size_t middle = left + (right - left) / 2;
+        mergeSortRecursive(arr, left, middle);
+        mergeSortRecursive(arr, middle + 1, right);
+
+        int* temp = new int[right - left + 1];
+        size_t i = left, j = middle + 1, k = 0;
+
+        while (i <= middle && j <= right)
+        {
+            if (arr[i] <= arr[j])
+            {
+                temp[k++] = arr[i++];
+            }
+            else
+            {
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while (i <= middle)
+        {
+            temp[k++] = arr[i++];
+        }
+
+        while (j <= right)
+        {
+            temp[k++] = arr[j++];
+        }
+
+        for (i = left; i <= right; ++i)
+        {
+            arr[i] = temp[i - left];
+        }
+
+        delete[] temp;
+    }
+}
+
+// Quick sort algorithm
+void SortingComparison::quickSort(Array& arr)
+{
+    quickSortRecursive(arr.getData(), 0, arr.getSize() - 1);
+}
+
+// Recursive function for quick sort
+void SortingComparison::quickSortRecursive(int* arr, size_t left, size_t right)
+{
+    if (left < right)
+    {
+        int pivot = arr[left];
+        size_t i = left, j = right;
+        while (i <= j)
+        {
+            while (arr[i] < pivot) ++i;
+            while (arr[j] > pivot) --j;
+            if (i <= j)
+            {
+                swap(arr[i], arr[j]);
+                ++i;
+                --j;
+            }
+        }
+        if (left < j) quickSortRecursive(arr, left, j);
+        if (i < right) quickSortRecursive(arr, i, right);
+    }
+}
+
+// Swap two integers
+void SortingComparison::swap(int& a, int& b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+// Measure the performance of a sorting algorithm
+void SortingComparison::measurePerformance(const string& sortMethodName, const function<void(Array&)>& sortMethod, Array& arr)
+{
+    Array copy(arr.getSize());
+    for (size_t i = 0; i < arr.getSize(); ++i)
+    {
+        copy[i] = arr[i];
+    }
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    sortMethod(copy);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    cout << "Time taken for " << sortMethodName << ": " << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << endl;
+    copy.print();
+}
+
 int main()
-{   
+{
+    srand(time(0)); // Seed the random number generator
+    Array arr(100); // Create an array of size 100
+    arr.fillRandom(); // Fill the array with random numbers
+
+    cout << "Before sorting:" << endl;
+    arr.print(); // Print the array before sorting
+
+    // Measure and print the performance of different sorting algorithms
+    SortingComparison::measurePerformance("Bubble Sort", SortingComparison::bubbleSort, arr);
+    SortingComparison::measurePerformance("Shaker Sort", SortingComparison::shakerSort, arr);
+    SortingComparison::measurePerformance("Insertion Sort", SortingComparison::insertionSort, arr);
+    SortingComparison::measurePerformance("Selection Sort", SortingComparison::selectionSort, arr);
+    SortingComparison::measurePerformance("Merge Sort", SortingComparison::mergeSort, arr);
+    // SortingComparison::measurePerformance("Quick Sort", SortingComparison::quickSort, arr);
 
     return 0;
 }

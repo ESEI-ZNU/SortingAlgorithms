@@ -83,6 +83,49 @@ private:
     static void swap(int& a, int& b);
 };
 
+// Bubble sort algorithm
+void SortingComparison::bubbleSort(Array& arr)
+{
+    size_t n = arr.getSize();
+    int* data = arr.getData();
+    for (size_t i = 0; i < n - 1; ++i)
+    {
+        for (size_t j = 0; j < n - i - 1; ++j)
+        {
+            if (data[j] > data[j + 1])
+            {
+                swap(data[j], data[j + 1]);
+            }
+        }
+    }
+}
+
+// Shaker sort algorithm (bidirectional bubble sort)
+void SortingComparison::shakerSort(Array& arr)
+{
+    size_t n = arr.getSize();
+    int* data = arr.getData();
+    bool swapped;
+    do {
+        swapped = false;
+        for (size_t i = 0; i < n - 1; ++i) {
+            if (data[i] > data[i + 1]) {
+                swap(data[i], data[i + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped) break;
+        swapped = false;
+        for (size_t i = n - 1; i > 0; --i) {
+            if (data[i - 1] > data[i]) {
+                swap(data[i - 1], data[i]);
+                swapped = true;
+            }
+        }
+    } while (swapped);
+}
+
+
 // Merge sort algorithm
 void SortingComparison::mergeSort(Array& arr)
 {

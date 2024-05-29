@@ -64,7 +64,7 @@ public:
     }
 };
 
-// Class to compare different sorting algorithms
+// Class to compare different sorting algorithms * late developer 2 commit
 class SortingComparison
 {
 public:

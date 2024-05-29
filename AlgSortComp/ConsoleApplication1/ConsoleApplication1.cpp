@@ -125,6 +125,45 @@ void SortingComparison::shakerSort(Array& arr)
     } while (swapped);
 }
 
+// Insertion sort algorithm
+void SortingComparison::insertionSort(Array& arr)
+{
+    size_t n = arr.getSize();
+    int* data = arr.getData();
+    for (size_t i = 1; i < n; ++i)
+    {
+        int key = data[i];
+        int j = i - 1;
+        while (j >= 0 && data[j] > key)
+        {
+            data[j + 1] = data[j];
+            j = j - 1;
+        }
+        data[j + 1] = key;
+    }
+}
+
+// Selection sort algorithm
+void SortingComparison::selectionSort(Array& arr)
+{
+    size_t n = arr.getSize();
+    int* data = arr.getData();
+    for (size_t i = 0; i < n - 1; ++i)
+    {
+        size_t minIndex = i;
+        for (size_t j = i + 1; j < n; ++j)
+        {
+            if (data[j] < data[minIndex])
+            {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i)
+        {
+            swap(data[i], data[minIndex]);
+        }
+    }
+}
 
 // Merge sort algorithm
 void SortingComparison::mergeSort(Array& arr)
